@@ -184,9 +184,12 @@ public final class Collections {
 		// who set up circular or shared references between/to collections.
 		if ( ce.isReached() ) {
 			// We've been here before
-			throw new HibernateException(
-					"Found shared references to a collection: " + type.getRole()
-			);
+
+			// Alfa change - ignore shared collections, these are deliberate and there will be no changes within them.
+			return;
+//			throw new HibernateException(
+//					"Found shared references to a collection: " + type.getRole()
+//			);
 		}
 
 		ce.setReached( true );
