@@ -41,15 +41,13 @@ final class CallbackRegistryImpl implements CallbackRegistryImplementor {
 			return;
 		}
 
-		for ( Callback callback : callbacks ) {
-			final HashMap<Class, Callback[]> map = determineAppropriateCallbackMap( callback.getCallbackType() );
-			Callback[] entityCallbacks = map.get( entityClass );
-			if ( entityCallbacks == null ) {
-				entityCallbacks = new Callback[0];
-			}
-			entityCallbacks = ArrayHelper.join( entityCallbacks, callback );
-			map.put( entityClass, entityCallbacks );
+		final HashMap<Class, Callback[]> map = determineAppropriateCallbackMap( callbacks[0].getCallbackType() );
+		Callback[] entityCallbacks = map.get( entityClass );
+
+		if ( entityCallbacks != null ) {
+			callbacks = ArrayHelper.join( entityCallbacks, callbacks );
 		}
+		map.put( entityClass, callbacks );
 	}
 
 	@Override
