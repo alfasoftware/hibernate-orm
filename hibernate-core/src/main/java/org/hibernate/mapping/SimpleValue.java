@@ -14,8 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Objects;
+import java.util.Properties;
+
 import javax.persistence.AttributeConverter;
 
 import org.hibernate.FetchMode;
@@ -515,7 +516,7 @@ public class SimpleValue implements KeyValue {
 			throw new MappingException( msg );
 		}
 
-		return type = result;
+		return result;
 	}
 
 	@Override
