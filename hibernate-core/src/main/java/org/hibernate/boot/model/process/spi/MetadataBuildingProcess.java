@@ -286,7 +286,7 @@ public class MetadataBuildingProcess {
 
 		processor.finishUp();
 
-		metadataCollector.processSecondPasses( rootMetadataBuildingContext );
+		metadataCollector.processSecondPasses( rootMetadataBuildingContext ); // ensure this happens before the contributors are loaded so that the models on the collector are fully set
 
 		for ( MetadataContributor contributor : classLoaderService.loadJavaServices( MetadataContributor.class ) ) {
 			log.tracef( "Calling MetadataContributor : %s", contributor );
