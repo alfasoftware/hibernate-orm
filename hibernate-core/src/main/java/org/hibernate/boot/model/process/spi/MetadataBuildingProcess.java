@@ -6,10 +6,6 @@
  */
 package org.hibernate.boot.model.process.spi;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.hibernate.boot.AttributeConverterInfo;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.internal.InFlightMetadataCollectorImpl;
@@ -45,9 +41,12 @@ import org.hibernate.type.descriptor.sql.SqlTypeDescriptor;
 import org.hibernate.type.spi.TypeConfiguration;
 import org.hibernate.usertype.CompositeUserType;
 import org.hibernate.usertype.UserType;
-
 import org.jboss.jandex.IndexView;
 import org.jboss.logging.Logger;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents the process of of transforming a {@link org.hibernate.boot.MetadataSources}
@@ -287,12 +286,12 @@ public class MetadataBuildingProcess {
 
 		processor.finishUp();
 
+		metadataCollector.processSecondPasses( rootMetadataBuildingContext ); // ensure this happens before the contributors are loaded so that the models on the collector are fully set
+
 		for ( MetadataContributor contributor : classLoaderService.loadJavaServices( MetadataContributor.class ) ) {
 			log.tracef( "Calling MetadataContributor : %s", contributor );
 			contributor.contribute( metadataCollector, jandexView );
 		}
-
-		metadataCollector.processSecondPasses( rootMetadataBuildingContext );
 
 		if ( options.isXmlMappingEnabled() ) {
 			final Iterable<AdditionalJaxbMappingProducer> producers = classLoaderService.loadJavaServices( AdditionalJaxbMappingProducer.class );
