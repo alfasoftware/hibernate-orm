@@ -30,3 +30,5 @@ publishing {
 		}
 	}
 }
+
+task release( dependsOn: publishToSonatype )
