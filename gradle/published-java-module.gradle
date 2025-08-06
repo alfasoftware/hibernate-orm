@@ -165,5 +165,6 @@ publishing {
 
 task ciBuild( dependsOn: [test, publish] )
 
-task release( dependsOn: [test] )
+task release( dependsOn: [test, publishToSonatype] )
+publishToSonatype.mustRunAfter test
 
